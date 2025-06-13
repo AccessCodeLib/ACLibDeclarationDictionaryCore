@@ -305,6 +305,15 @@ Private Sub AddWordFromDeclaration(ByRef Declarations As String, ByVal IsProcedu
       Declarations = Replace(Declarations, "  ", " ")
    Loop
 
+   If Not IsProcedure And Not IsEnumTypeBlock Then
+      Do While Declarations Like "*(*,*)*"
+         ' prevent multi-dimensional Dim from transforming into new declarations (might be numeric)
+         Pos = InStr(1, Declarations, "(")
+         PosX = InStr(Pos, Declarations, ")")
+         Declarations = Left(Declarations, Pos - 1) & " " & Mid(Declarations, PosX + 1)
+      Loop
+   End If
+
    DeclArray = Split(Trim(Declarations), ",")
 
    For i = LBound(DeclArray) To UBound(DeclArray)
