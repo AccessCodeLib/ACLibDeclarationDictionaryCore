@@ -217,8 +217,8 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
 
       ' remove comments
       '.Pattern = "'(.*)[\r\n]"
-      .Pattern = "'(.*)(?:[\r\n]|$)"
-      Code = .Replace(Code, "")
+      .Pattern = "'(.*)([\r\n]|$)"
+      Code = .Replace(Code, "$2")          
 
 #If DebugPrintEnabled Then
    DebugPrint Code, True, "PrepareCode- after remove comments"
