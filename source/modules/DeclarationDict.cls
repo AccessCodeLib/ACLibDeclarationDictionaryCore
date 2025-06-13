@@ -224,6 +224,10 @@ Private Function PrepareCode(ByVal Code As String, ByVal RegEx As RegExp) As Str
    DebugPrint Code, True, "PrepareCode- after remove comments"
 #End If
 
+      ' treat line labels as dim (but not line numbers)
+      .Pattern = "([\r\n]|^)([^0-9\r\n]\S*):([\r\n]|$)"
+      Code = .Replace(Code, "$1Dim $2$3")
+
       ' dim a as String: a = 5  => insert line break
       .Pattern = "(\:\s)"
       Code = .Replace(Code, vbNewLine)
