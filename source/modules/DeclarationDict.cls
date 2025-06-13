@@ -162,7 +162,9 @@ Public Sub ImportVBComponent(ByVal VBComponent2Import As VBComponent)
 End Sub
 
 Public Sub ImportCodeModule(ByVal CodeModule2Import As CodeModule)
-   ImportCode CodeModule2Import.Lines(1, CodeModule2Import.CountOfLines)
+   If CodeModule2Import.CountOfLines > 0 Then
+      ImportCode CodeModule2Import.Lines(1, CodeModule2Import.CountOfLines)
+   End If
 End Sub
 
 Public Sub ImportCode(ByVal Code As String)
