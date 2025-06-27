@@ -56,7 +56,9 @@ Public Sub ImportCode_InsertCodeLine_CheckKeys(ByVal Code As String, ByVal Expec
   
    Dim Actual As String
    
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -73,7 +75,9 @@ Public Sub ImportCode_Issue4_MultiDimArrayDeclaration(ByVal Code As String, ByVa
   
    Dim Actual As String
    
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -89,7 +93,9 @@ Public Sub ImportCode_InsertCodeLines_CheckKeys(ByVal Code As String, ByVal Expe
 
    Dim Actual As String
       
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -101,7 +107,9 @@ Public Sub ImportCode_Issue3_RemovingCommentCorruptsLineEndings(ByVal Code As St
 
    Dim Actual As String
       
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -114,7 +122,9 @@ Public Sub ImportCode_Pullrequest8_LineLabel(ByVal Code As String, ByVal Expecte
   
    Dim Actual As String
    
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -135,7 +145,9 @@ Public Sub ImportCode_API_CheckKeys(ByVal Code As String, ByVal Expected As Stri
 '   RegEx.Pattern = "(?:Declare)\s(Function|Sub)\s([^ ]*)[^(]*\("
 '   Actual = RegEx.Replace(Code, "$1 $2(")
    
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -156,7 +168,9 @@ Public Sub ImportCode_EnumCode_CheckKeys()
    
    Const Expected As String = "xyz|en1|en2|x|y"
 
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -177,7 +191,9 @@ Public Sub ImportCode_TypeCode_CheckKeys()
    
    Const Expected As String = "xyz|F1|F2|x|y"
 
-   m_DeclDict.ImportCode Code
+   With New VbaDeclarationReader
+        .ImportCode Code, m_DeclDict
+   End With
    Actual = Join(m_DeclDict.WordsDict.Keys, "|")
    
    Assert.That Actual, Iz.EqualTo(Expected)
@@ -211,7 +227,9 @@ Public Sub ImportClassCodeModule_CheckKeysExists()
                         "TestPullrequest8_LineLabels", "ExitHere", "ErrHandler")
     
    
-   m_DeclDict.ImportVBComponent CurrentVbProject.VBComponents("DeclarationDictTestCodemodule")
+   With New VbaDeclarationReader
+        .ImportVBComponent CurrentVbProject.VBComponents("DeclarationDictTestCodemodule"), m_DeclDict
+   End With
    
    Set ActualDict = m_DeclDict.WordsDict
 
