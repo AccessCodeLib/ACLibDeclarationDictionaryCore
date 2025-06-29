@@ -27,6 +27,14 @@
     "ADODB": {
       "GUID": "{B691E011-1797-432E-907A-4D8C69339129}",
       "Version": "6.1"
+    },
+    "mscoree": {
+      "GUID": "{5477469E-83B1-11D2-8B49-00A0C9B7C9C4}",
+      "Version": "2.0"
+    },
+    "mscorlib": {
+      "GUID": "{BED7F4EA-1A96-11D2-8F08-00A0C9A6186D}",
+      "Version": "2.0"
     }
   }
 }

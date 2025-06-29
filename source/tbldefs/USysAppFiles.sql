@@ -1,0 +1,5 @@
+﻿CREATE TABLE [USysAppFiles] (
+  [FileName] VARCHAR (255) CONSTRAINT [PrimaryKey] PRIMARY KEY UNIQUE NOT NULL,
+  [Version] VARCHAR (255),
+  [File] VARCHAR
+)

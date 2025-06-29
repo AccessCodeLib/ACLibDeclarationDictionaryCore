@@ -59,7 +59,7 @@ Private Declare PtrSafe Function API_GetTempFilename Lib "kernel32" Alias "GetTe
          ByVal lpTempFileName As String) As Long
 
 Private Declare PtrSafe Function API_ShellExecuteA Lib "shell32.dll" Alias "ShellExecuteA" ( _
-         ByVal Hwnd As LongPtr, _
+         ByVal hwnd As LongPtr, _
          ByVal lOperation As String, _
          ByVal lpFile As String, _
          ByVal lpParameters As String, _
@@ -797,7 +797,7 @@ End Function
 '---------------------------------------------------------------------------------------
 Public Function CreateZipFile(ByVal ZipFile As String, Optional ByRef DeleteExistingFile As Boolean = False) As Boolean
 
-   Dim FileHandle As Long
+   Dim fileHandle As Long
 
    If FileExists(ZipFile) Then
       If DeleteExistingFile Then
@@ -808,10 +808,10 @@ Public Function CreateZipFile(ByVal ZipFile As String, Optional ByRef DeleteExis
       End If
    End If
 
-   FileHandle = FreeFile
-   Open ZipFile For Output As #FileHandle
-   Print #FileHandle, Chr$(80) & Chr$(75) & Chr$(5) & Chr$(6) & String$(18, 0)
-   Close #FileHandle
+   fileHandle = FreeFile
+   Open ZipFile For Output As #fileHandle
+   Print #fileHandle, Chr$(80) & Chr$(75) & Chr$(5) & Chr$(6) & String$(18, 0)
+   Close #fileHandle
 
    CreateZipFile = FileExists(ZipFile)
 

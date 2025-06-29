@@ -45,6 +45,9 @@
       "USysAPI": {
         "Format": "XML Format"
       },
+      "USysAppFiles": {
+        "Format": "XML Format"
+      },
       "USysRegInfo": {
         "Format": "Tab Delimited"
       },
