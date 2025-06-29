@@ -11,7 +11,7 @@ Option Compare Database
 Option Explicit
 
 Private Declare PtrSafe Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" ( _
-    ByVal hwnd As LongPtr, _
+    ByVal Hwnd As LongPtr, _
     ByVal lpOperation As String, _
     ByVal lpFile As String, _
     ByVal lpParameters As String, _

@@ -23,7 +23,7 @@ End Function
 '
 '---------------------------------------------------------------------------------------
 Public Function RunVcsCheckDialog() As Variant
-   RunVcsCheckDialog = RunVcsCheck(True)
+   RunVcsCheckDialog = RunVcsCheck(True, , True)
 End Function
 
 
@@ -43,7 +43,8 @@ End Function
 '
 '---------------------------------------------------------------------------------------
 Public Function RunVcsCheck(Optional ByVal OpenDialogToFixLettercase As Boolean = False, _
-                            Optional ByVal DeclDictFilePath As String = vbNullString) As Variant
+                            Optional ByVal DeclDictFilePath As String = vbNullString, _
+                            Optional ByVal ReadReferencesTypeLib As Boolean = False) As Variant
 
     Dim CheckMsg As String
     Dim DiffCnt As Long
@@ -59,9 +60,7 @@ Public Function RunVcsCheck(Optional ByVal OpenDialogToFixLettercase As Boolean 
     End If
 
     If Not DeclDict.LoadFromFile(DeclDictFilePath) Then
-       With New VbaDeclarationReader
-          .ImportVBProject CurrentVbProject, DeclDict
-       End With
+       ImportVBProject CurrentVbProject, DeclDict, ReadReferencesTypeLib
        ' ... log info: first export
        DeclDict.ExportToFile DeclDictFilePath
        RunVcsCheck = "Info: No dictionary data found. A new dictionary has been created."
@@ -69,9 +68,7 @@ Public Function RunVcsCheck(Optional ByVal OpenDialogToFixLettercase As Boolean 
     End If
 
     IntialCnt = DeclDict.Count
-    With New VbaDeclarationReader
-        .ImportVBProject CurrentVbProject, DeclDict
-    End With
+    ImportVBProject CurrentVbProject, DeclDict, ReadReferencesTypeLib
 
     DiffCnt = DeclDict.DiffCount
     If DiffCnt = 0 Then
@@ -103,3 +100,19 @@ Public Function RunVcsCheck(Optional ByVal OpenDialogToFixLettercase As Boolean 
     End If
 
 End Function
+
+Private Sub ImportVBProject(ByVal VbProjectToImport As VBIDE.VBProject, ByVal DeclDict As DeclarationDict, _
+                   Optional ByVal ReadReferencesTypeLib As Boolean = False)
+
+   ' Export TypeLib or references first
+   If ReadReferencesTypeLib Then
+      With New TypeLibDeclarationReader
+         .ImportVBProject VbProjectToImport, DeclDict
+      End With
+   End If
+
+   With New VbaDeclarationReader
+      .ImportVBProject VbProjectToImport, DeclDict
+   End With
+
+End Sub

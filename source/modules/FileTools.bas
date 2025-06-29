@@ -59,7 +59,7 @@ Private Declare PtrSafe Function API_GetTempFilename Lib "kernel32" Alias "GetTe
          ByVal lpTempFileName As String) As Long
 
 Private Declare PtrSafe Function API_ShellExecuteA Lib "shell32.dll" Alias "ShellExecuteA" ( _
-         ByVal hwnd As LongPtr, _
+         ByVal Hwnd As LongPtr, _
          ByVal lOperation As String, _
          ByVal lpFile As String, _
          ByVal lpParameters As String, _
@@ -753,7 +753,7 @@ Public Sub AddToZipFile(ByVal ZipFile As String, ByVal FullFileName As String)
    End If
 
    With CreateObject("Shell.Application")
-      .NameSpace(ZipFile & "").CopyHere FullFileName & ""
+      .Namespace(ZipFile & "").CopyHere FullFileName & ""
    End With
 
 End Sub
@@ -775,8 +775,8 @@ End Sub
 Public Function ExtractFromZipFile(ByVal ZipFile As String, ByVal Destination As String) As String
 
    With CreateObject("Shell.Application")
-      .NameSpace(Destination & "").CopyHere .NameSpace(ZipFile & "").Items
-      ExtractFromZipFile = .NameSpace(ZipFile & "").Items.Item(0).Name
+      .Namespace(Destination & "").CopyHere .Namespace(ZipFile & "").Items
+      ExtractFromZipFile = .Namespace(ZipFile & "").Items.Item(0).Name
    End With
 
 End Function

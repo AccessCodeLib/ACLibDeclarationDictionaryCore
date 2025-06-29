@@ -97,7 +97,9 @@ Private Function IsChangedItem(ByVal Word As String, ByVal SubDict As Scripting.
 
 End Function
 
-Public Sub AddWord(ByVal Word As String)
+Public Sub AddWord(ByVal Word As String, Optional ByVal IgnoreLetterCaseVariants As Boolean = False)
+
+   Dim WordAdded As Boolean
 
    Word = Trim(Word)
 
@@ -121,23 +123,29 @@ Public Sub AddWord(ByVal Word As String)
    If Not m_Words.Exists(Word) Then
       m_Words.Add Word, Word
       m_WordVariations.Add Word, GetNewDict(BinaryCompare)
+      m_WordVariations.Item(Word).Add Word, Word
       RaiseInsert = True
+      WordAdded = True
    End If
 
-   Set SubDict = m_WordVariations.Item(Word)
-   With SubDict
-      If Not .Exists(Word) Then
-         .Add Word, Word
-         RaiseChanged = True
-      ElseIf .Count > 1 Then
-         LastKey = .Keys(.Count - 1)
-         If StrComp(LastKey, Word, vbBinaryCompare) <> 0 Then
-            .Remove Word
-            .Add Word, Word
+   If Not IgnoreLetterCaseVariants Then
+      Set SubDict = m_WordVariations.Item(Word)
+      With SubDict
+         If Not WordAdded Then
+            If (Not .Exists(Word)) Then
+               .Add Word, Word
+               RaiseChanged = True
+            ElseIf .Count > 1 Then
+               LastKey = .Keys(.Count - 1)
+               If StrComp(LastKey, Word, vbBinaryCompare) <> 0 Then
+                  .Remove Word
+                  .Add Word, Word
+               End If
+               RaiseChanged = True
+            End If
          End If
-         RaiseChanged = True
-      End If
-   End With
+      End With
+   End If
 
    If RaiseInsert Then
       RaiseEvent WordInserted(Word)
@@ -262,6 +270,9 @@ Public Sub FixLetterCase(ByVal WordWithNewLetterCase As String)
 
     With New CodeModulGenerator
         .CreateCodemodule vbext_ct_StdModule
+        If Left(WordWithNewLetterCase, 1) = "_" Then
+           WordWithNewLetterCase = "[" & WordWithNewLetterCase & "]"
+        End If
         .InsertDeclarationLine "Private " & WordWithNewLetterCase
         .RemoveCodemodule
     End With

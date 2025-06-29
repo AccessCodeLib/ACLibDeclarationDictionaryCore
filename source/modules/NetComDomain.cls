@@ -85,6 +85,6 @@ Public Property Get DefaultNameSpace() As String
     DefaultNameSpace = m_DefaultNameSpace
 End Property
 
-Public Property Let DefaultNameSpace(ByVal NameSpace As String)
-    m_DefaultNameSpace = NameSpace
+Public Property Let DefaultNameSpace(ByVal Namespace As String)
+    m_DefaultNameSpace = Namespace
 End Property

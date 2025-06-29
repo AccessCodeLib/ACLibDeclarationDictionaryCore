@@ -42,7 +42,7 @@ Public Sub ImportTypeLib(ByVal TypeLibFile As String, ByVal DeclDict As Declarat
    Words = m_TypeLibReader.ReadTypeLib(TypeLibFile)
 
    For i = LBound(Words) To UBound(Words)
-      m_DeclDict.AddWord Words(i)
+      m_DeclDict.AddWord Words(i), True
    Next
 
 End Sub
@@ -73,6 +73,7 @@ End Function
 Private Sub RegisterNetComDll()
 
    With New TypeLibDeclarationReaderInstaller
+      .UnRegisterNetComDll
       If Len(VBA.Dir(ComDllFilePath)) = 0 Then
          .ExportDllFileToFolder ComDllFolderPath
       End If
